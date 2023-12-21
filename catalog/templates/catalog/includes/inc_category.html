@@ -1,0 +1,21 @@
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+        <div class="card-body">
+            <p class="card-text">
+                {{ object.product_name|upper }}<br>
+                {{ object.product_descr|truncatechars:100 }}<br>
+                <h1 style="text-align: center">{{ object.product_price_each|title }}</h1>
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="{% url 'catalog:product_detail' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">To learn
+                        more
+                    </a>
+                </div>
+                <small class="text-muted">{{ object.category_id }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- {% url 'catalog:category_idea' object.pk %} -->

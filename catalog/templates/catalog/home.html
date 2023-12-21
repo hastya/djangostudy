@@ -1,0 +1,106 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Store/Main</title>
+    <!-- Bootstrap CSS -->
+    <!-- {% static 'css/bootstrap.min.css' %} -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{%  static 'images/A.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                Store
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <nav class="nav">
+      <a class="nav-link disabled" aria-disabled="true">Home</a>
+      <a class="nav-link active" aria-current="page" href="contact/">Contacts</a>
+    </nav>
+</div>
+
+<div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Store</h1>
+        <p class="lead">
+            Store - this is a space for buying / selling your ideas!!!
+        </p>
+    </div>
+</div>
+
+<div>
+    <div class="container-md">
+        <div class="row mt-5">
+            <div class="col-6">
+                    <div class="card bs-primary-border-subtle">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal" >Simple idea</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">$ 100</h1>
+                            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                                <li>- Rights of use</li>
+                                <li>- Detailed description of the idea</li>
+                                <li>- Originality</li>
+                                <li>- Minimum investment</li>
+                            </ul>
+                            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Buy this idea</button>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-6">
+                <div class="card bs-primary-border-subtle">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Investment idea</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$ 500</h1>
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>- Profit guarantee</li>
+                            <li>- The financial analysis</li>
+                            <li>- Selecting an Investment Industry</li>
+                            <li>- Long-term perspective</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Buy this idea</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                Store
+                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+            </div>
+
+            <div class="col-6 col-md">
+                <h3>About Us</h3>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="contact/">Contacts</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

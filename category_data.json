@@ -1,0 +1,47 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Small",
+      "category_descr": "Small idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Little",
+      "category_descr": "Little idea",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "category_name": "Big",
+      "category_descr": "Big idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "category_name": "Medium",
+      "category_descr": "Medium idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "category_name": "Average",
+      "category_descr": "Average idea",
+      "is_active": false
+    }
+  }
+]

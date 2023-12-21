@@ -1,0 +1,44 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "product_name": "Idea1",
+      "product_descr": "A quick and easy idea to implement",
+      "product_img": "",
+      "product_category": 1,
+      "product_price_each": "10",
+      "product_date_create": "2023-12-20T10:47:06.892Z",
+      "product_date_last": "2023-12-20T10:47:01Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Idea10",
+      "product_descr": "A simple but long-lasting idea",
+      "product_img": "",
+      "product_category": 4,
+      "product_price_each": "100",
+      "product_date_create": "2023-12-20T10:48:42.461Z",
+      "product_date_last": "2023-12-20T10:47:21Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "Idea100",
+      "product_descr": "A difficult and time-consuming idea to implement",
+      "product_img": "",
+      "product_category": 3,
+      "product_price_each": "999",
+      "product_date_create": "2023-12-20T10:49:46.712Z",
+      "product_date_last": "2023-12-20T10:49:32Z",
+      "is_active": true
+    }
+  }
+]
