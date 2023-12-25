@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="card mb-5 box-shadow">
+                    <div class="card-header">
+                        <h3 class="card-title pricing-card-title">Blog</h3>
+                        <a class="btn btn-primary" href="{% url 'blog:create' %}">Create Post</a>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            {% for object in object_list %}
+                                <div class="col-6">
+                                    <div class="card mb-4 box-shadow">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                {{ object|title }}
+                                            </p>
+                                            <div class="btn-group">
+                                                <a href="{% url 'blog:view' object.pk %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        View
+                                                    </button>
+                                                </a>
+                                                <a href="{% url 'blog:edit' object.pk %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        Update
+                                                    </button>
+                                                </a>
+                                                <a href="{% url 'blog:delete' object.pk %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        Delete
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <small class="text-body-secondary">{{ object.creation_date }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
