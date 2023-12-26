@@ -23,9 +23,18 @@
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <button type="button" href="product/" class="btn btn-sm btn-outline-secondary">Buy this
+                        <button type="button" href="#" class="btn btn-sm btn-outline-secondary">Buy this
                             idea?
                         </button>
+
+                        <div>
+                            <nav class="nav">
+                              <a class="nav-link active" href="{% url 'catalog:product_update' object.pk %}">Update</a>
+                              <a class="nav-link active" href="{% url 'catalog:product_delete' object.pk %}">Delete</a>
+                              <a class="nav-link active" href="{% url 'catalog:index' %}">Cancel</a>
+                            </nav>
+                        </div>
+
                     </div>
                     <small class="text-muted">{{ object.product_category_id }}</small>
                 </div>

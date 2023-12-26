@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.models import Feedback, Product, Category
 
@@ -7,11 +8,12 @@ from catalog.models import Feedback, Product, Category
 # Create your views here.
 class ProductListView(ListView):
     model = Product
-    template_name = 'catalog/index.html'
-    def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_active=True)
-        return queryset
+    # template_name = 'catalog/index.html'
+    # template_name = 'catalog/product_list.html'
+    # def get_queryset(self, *args, **kwargs):
+    #     queryset = super().get_queryset(*args, **kwargs)
+    #     queryset = queryset.filter(is_active=True)
+    #     return queryset
 
 
 # def index(request):
@@ -32,8 +34,10 @@ def about(request):
         print(f'{name} ({email}): {message}')
     return render(request, 'catalog/about.html')
 
+
 def homepage(request):
     return render(request, 'catalog/home.html')
+
 
 def contacts(request):
     if request.method == 'POST':
@@ -63,6 +67,7 @@ class CategoryListView(ListView):
 #         queryset = queryset.filter(is_active=True)
 #         return queryset
 
+
 def category_idea(request, pk):
     category_item = Category.objects.get(pk=pk)
     context = {
@@ -70,6 +75,7 @@ def category_idea(request, pk):
         'title': f'Ideas {category_item.category_name}'
     }
     return render(request, 'catalog/products.html', context)
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -86,3 +92,31 @@ class ProductDetailView(DetailView):
 #         'title': f'Ideas {product_item.product_name}'
 #     }
 #     return render(request, 'catalog/product_detail.html', context)
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('product_name', 'product_descr', 'product_img', 'product_category', 'product_price_each')
+    success_url = reverse_lazy('catalog:index')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('product_name', 'product_descr', 'product_img', 'product_category', 'product_price_each')
+    success_url = reverse_lazy('catalog:product_detail')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:index')
+    success_message = 'Idea successfully deleted'
+
+
+def tooggle_activity(request, pk):
+    product_item = get_object_or_404(Product, pk=pk)
+    if product_item.is_active:
+        product_item.is_active = False
+    else:
+        product_item.is_active = True
+    product_item.save()
+    return redirect(reverse('catalog:index'))
