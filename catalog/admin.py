@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from catalog.models import Feedback, Product, Category
+from catalog.models import Feedback, Product, Category, Version  #Sphere,
+
 
 # Register your models here.
 # admin.site.register(Feedback)
@@ -26,3 +27,13 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     search_fields = ('category_name', 'category_descr',)
 
+
+# @admin.register(Sphere)
+# class SphereAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'title', 'is_active')
+#     list_filter = ('is_active',)
+#     search_fields = ('title',)
+
+@admin.register(Version)
+class VersionAdmin(admin.ModelAdmin):
+    list_display = ('product', 'version_number', 'name', 'is_active',)
