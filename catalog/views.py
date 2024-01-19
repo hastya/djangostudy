@@ -12,14 +12,14 @@ class ProductListView(ListView):
     model = Product
     # template_name = 'catalog/index.html'
     # template_name = 'catalog/product_list.html'
-    # def get_queryset(self, *args, **kwargs):
-    #     queryset = super().get_queryset(*args, **kwargs)
-    #     queryset = queryset.filter(is_active=True)
-    #     return queryset
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_active=True)
+        return queryset
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
 
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(*args, **kwargs)
 
         for product in context['object_list']:
             active_version = product.prod.filter(is_active=True).last()
@@ -68,26 +68,26 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'catalog/categories.html'
 
-# def categories(request):
-#     context = {
-#         'object_list': Category.objects.filter(is_active=True),
-#         'title': 'Ideas Categories'
-#     }
-#     return render(request, 'catalog/categories.html', context)
+def categories(request):
+    context = {
+        'object_list': Category.objects.filter(is_active=True),
+        'title': 'Ideas Categories'
+    }
+    return render(request, 'catalog/categories.html', context)
 
-# class CategoryDetailView(DetailView):
-#     model = Product
-#     template_name = 'catalog/products.html'
-#     def get_queryset(self, *args, **kwargs):
-#         queryset = super().get_queryset(*args, **kwargs)
-#         queryset = queryset.filter(is_active=True)
-#         return queryset
+class CategoryDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/products.html'
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_active=True)
+        return queryset
 
 
 def category_idea(request, pk):
     category_item = Category.objects.get(pk=pk)
     context = {
-        'object_list': Product.objects.filter(product_category_id=pk),
+        'object_list': Product.objects.filter(product_category_id=pk, owner=request.user),
         'title': f'Ideas {category_item.category_name}'
     }
     return render(request, 'catalog/products.html', context)
@@ -100,14 +100,6 @@ class ProductDetailView(DetailView):
     #     context = super().get_context_data(**kwargs)
     #     context['object_list'] = Product.objects.filter(pk=self.kwargs['pk'])
     #     return context
-
-# def product_detail(request, pk):
-#     product_item = Product.objects.get(pk=pk)
-#     context = {
-#         'object_list': Product.objects.filter(id=pk),
-#         'title': f'Ideas {product_item.product_name}'
-#     }
-#     return render(request, 'catalog/product_detail.html', context)
 
     def get_context_data(self, **kwargs):
 
@@ -123,6 +115,15 @@ class ProductDetailView(DetailView):
             product.active_version_name = None
 
         return context
+
+
+def product_detail(request, pk):
+    product_item = Product.objects.get(pk=pk)
+    context = {
+        'object_list': Product.objects.filter(id=pk),
+        'title': f'Ideas {product_item.product_name}'
+    }
+    return render(request, 'catalog/product_detail.html', context)
 
 class ProductCreateView(CreateView):
     model = Product
@@ -141,6 +142,7 @@ class ProductCreateView(CreateView):
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         self.object = form.save()
+        self.object.owner = self.request.user
         self.object.save()
         if formset.is_valid():
             formset.instance = self.object

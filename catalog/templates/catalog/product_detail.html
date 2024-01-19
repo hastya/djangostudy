@@ -21,6 +21,7 @@
             <p> Описание: <b>{{ object.product_descr }} </b></p>
             <p>Номер версии: <b>{{ object.active_version_number }}</b></p>
             <p>Название версии: <b>{{ object.active_version_name }}</b></p>
+            <p>Владелец: <b>{{ object.owner|default:'UnKnown' }}</b></p>
         </div>
     </div>
 {% endblock %}

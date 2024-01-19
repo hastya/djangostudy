@@ -7,7 +7,6 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 # Create your models here.
-
 class Feedback(models.Model):
     name = models.CharField(max_length=50, verbose_name='имя')
     email = models.EmailField(verbose_name='Email')
@@ -34,7 +33,7 @@ class Product(models.Model):
     product_date_last = models.DateTimeField(verbose_name='дата последнего изменения', **NULLABLE)
 
     # email = models.CharField(max_length=150, verbose_name='email', unique=True, **NULLABLE)
-    # owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     is_active = models.BooleanField(default=True, verbose_name='Активно')
 

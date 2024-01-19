@@ -1,0 +1,254 @@
+[
+  {
+    "model": "catalog.feedback",
+    "pk": 1,
+    "fields": {
+      "name": "Anna",
+      "email": "anna@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 2,
+    "fields": {
+      "name": "Bob",
+      "email": "bob@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 3,
+    "fields": {
+      "name": "Cerol",
+      "email": "cerol@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 4,
+    "fields": {
+      "name": "Diana",
+      "email": "diana@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 5,
+    "fields": {
+      "name": "Igor",
+      "email": "igor@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 6,
+    "fields": {
+      "name": "Frosya",
+      "email": "frosya@gmail.com",
+      "message": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.feedback",
+    "pk": 7,
+    "fields": {
+      "name": "God",
+      "email": "god@gmail.com",
+      "message": "",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "product_name": "idea1",
+      "product_descr": "a quick and easy idea to implement\r\nкруто!",
+      "product_img": "products/Idea1.png",
+      "product_category": 1,
+      "product_price_each": "10",
+      "product_date_create": "2023-12-20T10:47:06.892Z",
+      "product_date_last": "2023-12-20T10:47:01Z",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Idea10",
+      "product_descr": "A simple but long-lasting idea\r\nCute",
+      "product_img": "products/Idea10.png",
+      "product_category": 4,
+      "product_price_each": "100",
+      "product_date_create": "2023-12-20T10:48:42.461Z",
+      "product_date_last": "2023-12-20T10:47:21Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "Idea100",
+      "product_descr": "A difficult and time-consuming idea",
+      "product_img": "products/Idea100.png",
+      "product_category": 3,
+      "product_price_each": "999",
+      "product_date_create": "2023-12-20T10:49:46.712Z",
+      "product_date_last": "2023-12-20T10:49:32Z",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "product_name": "Idea2",
+      "product_descr": "Idea № 2",
+      "product_img": "products/Idea2.png",
+      "product_category": 1,
+      "product_price_each": "20",
+      "product_date_create": "2023-12-21T07:19:25.841Z",
+      "product_date_last": "2023-12-21T07:18:58Z",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "product_name": "Idea20",
+      "product_descr": "Idea № 20",
+      "product_img": "",
+      "product_category": 4,
+      "product_price_each": "200",
+      "product_date_create": "2023-12-21T07:56:48.267Z",
+      "product_date_last": "2023-12-21T07:56:46Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "product_name": "Idea200",
+      "product_descr": "Big Idea № 2 \r\nInteresting",
+      "product_img": "products/паутина_Theridiidae.png",
+      "product_category": 3,
+      "product_price_each": "999",
+      "product_date_create": "2024-01-16T14:06:36.602Z",
+      "product_date_last": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 20,
+    "fields": {
+      "product_name": "идея 3",
+      "product_descr": "идея идейная 3\r\ntest",
+      "product_img": "products/Третьего_не_дано_Tertium_non_datur_eAs07k0.png",
+      "product_category": 2,
+      "product_price_each": "33",
+      "product_date_create": "2024-01-17T21:32:34.293Z",
+      "product_date_last": null,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Small",
+      "category_descr": "Small idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Little",
+      "category_descr": "Little idea",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "category_name": "Big",
+      "category_descr": "Big idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "category_name": "Medium",
+      "category_descr": "Medium idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "category_name": "Average",
+      "category_descr": "Average idea",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "category_name": "VIP",
+      "category_descr": "VIP Idea",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 3,
+    "fields": {
+      "product": 1,
+      "version_number": 2,
+      "name": "Вторая",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 4,
+    "fields": {
+      "product": 20,
+      "version_number": 1,
+      "name": "Первая",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 5,
+    "fields": {
+      "product": 20,
+      "version_number": 2,
+      "name": "Вторая",
+      "is_active": false
+    }
+  }
+]
