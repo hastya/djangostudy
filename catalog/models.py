@@ -36,6 +36,7 @@ class Product(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     is_active = models.BooleanField(default=True, verbose_name='Активно')
+    is_published = models.BooleanField(default=False, verbose_name='Утверждено модератором')
 
     def __str__(self):
         return f'{self.product_name}'
@@ -44,6 +45,11 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('product_name',)
+        permissions = [
+            ('set_is_published', 'Может менять статус публикации'),
+            ('set_description', 'Может изменять описание'),
+            ('set_category', 'Может изменять категорию'),
+        ]
 
 
 class Category(models.Model):
@@ -79,9 +85,12 @@ class Category(models.Model):
 
 class Version(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт', related_name='prod')
-    version_number = models.IntegerField(verbose_name="номер версии")
-    name = models.CharField(verbose_name="название версии")
-    is_active = models.BooleanField(verbose_name="активная версия")
+    version_number = models.IntegerField(verbose_name="Номер версии")
+    name = models.CharField(verbose_name="Название версии")
+    is_active = models.BooleanField(verbose_name="Активная версия")
+
+    def __str__(self):
+        return f'{self.product}({self.version_number}) - {self.name}'
 
     class Meta:
         verbose_name = 'версия'

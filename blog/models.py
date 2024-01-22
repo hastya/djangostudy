@@ -12,6 +12,7 @@ class Post(models.Model):
     published = models.BooleanField(default=True, verbose_name='опубликовано')
     views_count = models.IntegerField(default=0, verbose_name='просмотры')
 
+
     def __str__(self):
         return f'Blog post "{self.title}"\n{self.slug}\n'
 

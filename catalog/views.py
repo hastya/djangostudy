@@ -1,4 +1,8 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -7,7 +11,6 @@ from catalog.forms import ProductForm, VersionForm  # SphereForm,
 from catalog.models import Feedback, Product, Category, Version  # Sphere,
 
 
-# Create your views here.
 class ProductListView(ListView):
     model = Product
     # template_name = 'catalog/index.html'
@@ -16,6 +19,14 @@ class ProductListView(ListView):
         queryset = super().get_queryset(*args, **kwargs)
         queryset = queryset.filter(is_active=True)
         return queryset
+    # def get_queryset(self):
+    #     queryset = super().get_queryset().filter(
+    #         category_id=self.kwargs.get('pk'),
+    #     )
+    #     if not self.request.user.is_staff:
+    #         queryset = queryset.filter(owner=self.request.user)
+    #     return queryset
+
 
     def get_context_data(self, *args, **kwargs):
 
@@ -83,11 +94,22 @@ class CategoryDetailView(DetailView):
         queryset = queryset.filter(is_active=True)
         return queryset
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        for product in context['object_list']:
+            active_version = product.prod.filter(is_active=True).last()
+            if active_version:
+                product.active_version_number = active_version.version_number
+                product.active_version_name = active_version.name
+            else:
+                product.active_version_number = None
+                product.active_version_name = None
+        return context
 
 def category_idea(request, pk):
     category_item = Category.objects.get(pk=pk)
     context = {
-        'object_list': Product.objects.filter(product_category_id=pk, owner=request.user),
+        'object_list': Product.objects.filter(product_category_id=pk),  # owner=request.user
         'title': f'Ideas {category_item.category_name}'
     }
     return render(request, 'catalog/products.html', context)
@@ -125,10 +147,12 @@ def product_detail(request, pk):
     }
     return render(request, 'catalog/product_detail.html', context)
 
-class ProductCreateView(CreateView):
+
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     # fields = ('product_name', 'product_descr', 'product_img', 'product_category', 'product_price_each')
+    permission_required = 'catalog.add_product'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -153,10 +177,17 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('catalog:index')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UserPassesTestMixin, UpdateView):  # LoginRequiredMixin, PermissionRequiredMixin,
     model = Product
     # fields = ('product_name', 'product_descr', 'product_img', 'product_category', 'product_price_each')
     form_class = ProductForm
+    permission_required = 'catalog.change_product'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -180,10 +211,21 @@ class ProductUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('catalog:product_detail', args=[self.object.pk])
 
-class ProductDeleteView(DeleteView):
+    def test_func(self):
+        return self.get_object().owner == self.request.user or self.request.user.is_superuser
+            # or self.request.user.has_perms(['catalog.change_product'])
+
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):  # PermissionRequiredMixin
     model = Product
     success_url = reverse_lazy('catalog:index')
     success_message = 'Idea successfully deleted'
+    # permission_required = 'catalog.delete_product'
+
+    def test_func(self):
+        # return self.request.user.is_superuser
+        return self.get_object().owner == self.request.user or self.request.user.is_superuser \
+            or self.request.user.has_perms(['catalog.delete_product'])
 
 
 def tooggle_activity(request, pk):

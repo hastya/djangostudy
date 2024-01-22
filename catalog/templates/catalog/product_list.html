@@ -9,6 +9,7 @@
     <div class="container">
     <div class="col-12 mb-5">
         {% if user.is_authenticated %}
+{#        {% if perms.catalog.add_product %}#}
             <a class="btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Добавить продукт</a>
         {% endif %}
     </div>
@@ -25,15 +26,21 @@
                         <p>Номер версии: <b>{{ product.active_version_number }}</b></p>
                         <p>Название версии: <b>{{ product.active_version_name }}</b></p>
                         <p>Владелец: <b>{{ product.owner }}</b></p>
-                        {% if user.is_authenticated %}
+{#                        {% if user.is_authenticated %}#}
+                        {% if perms.catalog.change_product %}
                             <a href="{% url 'catalog:product_update' product.pk %}"
-                               class="btn mt-auto btn-outline-danger">Изменить</a>
+                               class="btn mt-auto btn-outline-primary">Изменить</a>
+{#                            {% if perms.catalog.delete_product %}#}
+                            {% if user.is_superuser %}
                             <a href="{% url 'catalog:product_delete' product.pk %}"
                                class="btn mt-auto btn-outline-danger">Удалить</a>
-                        {% else %}
-                            <a href="{% url 'catalog:product_detail' product.pk %}"
-                               class="btn mt-auto btn-outline-danger">Детали</a>
+                            {% endif %}
+                            {# {% else %}#}
+                            {# <a href="{% url 'catalog:product_detail' product.pk %}"#}
+                            {# class="btn mt-auto btn-outline-danger">Детали</a>#}
                         {% endif %}
+                        <a href="{% url 'catalog:product_detail' product.pk %}"
+                           class="btn mt-auto btn-outline-success">Детали</a>
                     </div>
                 </div>
             </div>

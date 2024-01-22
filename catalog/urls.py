@@ -4,10 +4,10 @@ from django.urls import path
 from django.contrib import admin
 
 from catalog.apps import CatalogConfig
-from catalog.views import homepage, contacts, about, category_idea, ProductListView, CategoryListView, \
+from catalog.views import homepage, contacts, about, ProductListView, CategoryListView, \
     ProductDetailView, ProductCreateView, ProductUpdateView, \
     ProductDeleteView, CategoryDetailView, product_detail, tooggle_activity
-    # ProductInventView, ProductEditView, index, categories,
+    # ProductInventView, ProductEditView, index, categories, category_idea,
 
 app_name = CatalogConfig.name
 
@@ -24,7 +24,7 @@ urlpatterns = [
     path('<int:pk>/products/', CategoryDetailView.as_view(), name='category_idea'),
     path('contact/', contacts, name='contacts'),
     path('activity/<int:pk>/', tooggle_activity, name='tooggle_activity')
-#    path('<int:pk>/products/', category_idea, name='category_idea'),
+#    path('<int:pk>/products/', category_idea, name='category_idea')
 #    path('', homepage),
 #    path('home/', homepage, name='homepage'),
 #    path('', index, name='index'),
