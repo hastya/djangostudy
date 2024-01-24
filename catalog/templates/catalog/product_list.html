@@ -39,8 +39,10 @@
                             {# <a href="{% url 'catalog:product_detail' product.pk %}"#}
                             {# class="btn mt-auto btn-outline-danger">Детали</a>#}
                         {% endif %}
+                        {% if perms.catalog.view_product %}
                         <a href="{% url 'catalog:product_detail' product.pk %}"
                            class="btn mt-auto btn-outline-success">Детали</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

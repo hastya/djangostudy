@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.http import Http404
@@ -9,7 +11,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from catalog.forms import ProductForm, VersionForm  # SphereForm,
 from catalog.models import Feedback, Product, Category, Version  # Sphere,
-
+from catalog.services import get_cached_category
 
 class ProductListView(ListView):
     model = Product
@@ -79,6 +81,12 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'catalog/categories.html'
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = 'Категории Товаров'
+        context_data['object_list'] = get_cached_category()
+        return context_data
+
 def categories(request):
     context = {
         'object_list': Category.objects.filter(is_active=True),
@@ -89,22 +97,25 @@ def categories(request):
 class CategoryDetailView(DetailView):
     model = Product
     template_name = 'catalog/products.html'
-    def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_active=True)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
         return queryset
 
     def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        for product in context['object_list']:
-            active_version = product.prod.filter(is_active=True).last()
-            if active_version:
-                product.active_version_number = active_version.version_number
-                product.active_version_name = active_version.name
-            else:
-                product.active_version_number = None
-                product.active_version_name = None
-        return context
+        context_data = super().get_context_data(*args, **kwargs)
+        category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_item.pk
+        context_data['title'] = f'Categoty {category_item.category_name}'
+        # for product in context_data['object_list']:
+        #     active_version = product.prod.filter(is_active=True).last()
+        #     if active_version:
+        #         product.active_version_number = active_version.version_number
+        #         product.active_version_name = active_version.name
+        #     else:
+        #         product.active_version_number = None
+        #         product.active_version_name = None
+        return context_data
 
 def category_idea(request, pk):
     category_item = Category.objects.get(pk=pk)
@@ -118,16 +129,24 @@ def category_idea(request, pk):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
+    permission_required = 'catalog.view_product'
+
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['object_list'] = Product.objects.filter(pk=self.kwargs['pk'])
     #     return context
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         product = context['object']
-
+        # if settings.CACHE_ENABLED:
+        #     key = f'subject_list_{self.object.pk}'
+        #     subject_list = cache.get(key)
+        #     if subject_list is None:
+        #         subject_list = self.object.subject_set.all()
+        #         cache.set(key, subject_list)
+        # else:
+        #     subject_list = self.object.subject_set.all()
         active_version = product.prod.filter(is_active=True).last()
         if active_version:
             product.active_version_number = active_version.version_number

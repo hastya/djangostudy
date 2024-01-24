@@ -2,6 +2,7 @@ from itertools import product
 
 from django.urls import path
 from django.contrib import admin
+from django.views.decorators.cache import cache_page, never_cache
 
 from catalog.apps import CatalogConfig
 from catalog.views import homepage, contacts, about, ProductListView, CategoryListView, \
@@ -15,10 +16,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ProductListView.as_view(), name='index'),
     path('about/', about, name='about'),
-    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+    path('product/<int:pk>/', cache_page(60)(ProductDetailView.as_view()), name='product_detail'),
    path('<int:pk>/product/', product_detail, name='product_detail'),
-    path('create/', ProductCreateView.as_view(), name='product_create'),
-    path('edit/<int:pk>/', ProductUpdateView.as_view(), name='product_update'),
+    path('create/', never_cache(ProductCreateView.as_view()), name='product_create'),
+    path('edit/<int:pk>/', never_cache(ProductUpdateView.as_view()), name='product_update'),
     path('delete/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
     path('categories/', CategoryListView.as_view(), name='categories'),
     path('<int:pk>/products/', CategoryDetailView.as_view(), name='category_idea'),
